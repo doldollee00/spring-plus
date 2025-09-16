@@ -8,9 +8,17 @@ public class ManagerResponse {
 
     private final Long id;
     private final UserResponse user;
+    private final int count;
 
     public ManagerResponse(Long id, UserResponse user) {
         this.id = id;
         this.user = user;
+        this.count = 0;
+    }
+
+    public ManagerResponse(int count) {
+        this.id = null;
+        this.user = null;
+        this.count = count;
     }
 }
