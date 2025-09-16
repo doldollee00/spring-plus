@@ -95,20 +95,7 @@ public class TodoService {
 
     public Page<TodoConditionResponse> getConditionTodo(int page, int size, String title, LocalDateTime start, LocalDateTime end, String nickname) {
         Pageable pageable = PageRequest.of(page - 1, size);
-
-        Page<Todo> ConditionTodos;
-
-        if (title != null && start != null && end != null && nickname != null) {
-            ConditionTodos = todoRepository.findByTextAndnicknameAndCreatedAtBetween(title, start, end, nickname, pageable);
-        } else if (title != null) {
-            ConditionTodos = todoRepository.findByTitle(title, pageable);
-        } else if (start != null && end != null) {
-            ConditionTodos = todoRepository.findByCreatedAtBetween(start, end, pageable);
-        } else if (nickname != null) {
-            ConditionTodos = todoRepository.findByNickname(nickname, pageable);
-        } else {
-            ConditionTodos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
-        }
+        Page<Todo> ConditionTodos = todoRepository.findByConditions(title, start, end, nickname, pageable);
 
         return ConditionTodos.map(todo -> new TodoConditionResponse(
                 todo.getTitle(),

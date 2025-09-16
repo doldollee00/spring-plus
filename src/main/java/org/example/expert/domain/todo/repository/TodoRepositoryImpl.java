@@ -1,5 +1,6 @@
 package org.example.expert.domain.todo.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +35,26 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom{
     }
 
     @Override
-    public Page<Todo> findByTextAndnicknameAndCreatedAtBetween(String title, LocalDateTime start, LocalDateTime end, String nickname, Pageable pageable) {
-        List<Todo> result = jpaQueryFactory
+    public Page<Todo> findByConditions(String title, LocalDateTime start, LocalDateTime end, String nickname, Pageable pageable) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (title != null && !title.isEmpty()) {
+            builder.and(todo.title.contains(title));
+        }
+
+        if (start != null && end != null) {
+            builder.and(todo.createdAt.between(start, end));
+        }
+
+        if (nickname != null && !nickname.isEmpty()) {
+            builder.and(todo.user.nickname.contains(nickname));
+        }
+
+        List<Todo> content = jpaQueryFactory
                 .selectFrom(todo)
-                .where(
-                        todo.title.contains(title),
-                        todo.user.nickname.contains(nickname),
-                        todo.createdAt.between(start, end)
-                )
+                .join(todo.user, user).fetchJoin()
+                .where(builder)
+                .orderBy(todo.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -50,63 +63,8 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom{
                 .select(todo.count())
                 .from(todo)
                 .join(todo.user, user)
-                .where(
-                        todo.title.contains(title),
-                        todo.user.nickname.contains(nickname),
-                        todo.createdAt.between(start, end)
-                );
-        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
-    }
+                .where(builder);
 
-    @Override
-    public Page<Todo> findByTitle(String title, Pageable pageable) {
-        List<Todo> result = jpaQueryFactory
-                .selectFrom(todo)
-                .where(todo.title.contains(title))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        JPAQuery<Long> countQuery = jpaQueryFactory
-                .select(todo.count())
-                .from(todo)
-                .where(todo.title.contains(title));
-
-        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
-    }
-
-    @Override
-    public Page<Todo> findByNickname(String nickname, Pageable pageable) {
-        List<Todo> result = jpaQueryFactory
-                .selectFrom(todo)
-                .join(todo.user, user).fetchJoin()
-                .where(todo.user.nickname.contains(nickname))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        JPAQuery<Long> countQuery = jpaQueryFactory
-                .select(todo.count())
-                .from(todo)
-                .where(todo.user.nickname.contains(nickname));
-
-        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
-    }
-
-    @Override
-    public Page<Todo> findByCreatedAtBetween(LocalDateTime start, LocalDateTime end, Pageable pageable) {
-        List<Todo> result = jpaQueryFactory
-                .selectFrom(todo)
-                .where(todo.createdAt.between(start, end))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        JPAQuery<Long> countQuery = jpaQueryFactory
-                .select(todo.count())
-                .from(todo)
-                .where(todo.createdAt.between(start, end));
-
-        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 }
