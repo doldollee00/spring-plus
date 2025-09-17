@@ -9,7 +9,5 @@ import java.util.Optional;
 
 public interface TodoRepositoryCustom {
     Optional<Todo> findByIdWithUser(Long todoId);
-
     Page<Todo> findByConditions(String title, LocalDateTime start, LocalDateTime end, String nickname, Pageable pageable);
-
 }
