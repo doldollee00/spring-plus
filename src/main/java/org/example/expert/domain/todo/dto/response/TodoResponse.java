@@ -1,6 +1,8 @@
 package org.example.expert.domain.todo.dto.response;
 
 import lombok.Getter;
+import org.example.expert.domain.manager.dto.response.ManagerResponse;
+import org.example.expert.domain.manager.entity.Manager;
 import org.example.expert.domain.user.dto.response.UserResponse;
 
 import java.time.LocalDateTime;
@@ -26,3 +28,4 @@ public class TodoResponse {
         this.modifiedAt = modifiedAt;
     }
 }
+
