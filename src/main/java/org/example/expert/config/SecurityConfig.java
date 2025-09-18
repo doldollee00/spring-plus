@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // 로그인, 회원가입 등은 허용
+                        .requestMatchers("/health").permitAll() // 로그인, 회원가입 등은 허용
                         .anyRequest().authenticated() // 그 외 요청은 인증 필요
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
