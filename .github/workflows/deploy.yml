@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - test/aws2
+      - test/aws3
 
 jobs:
   deploy:
