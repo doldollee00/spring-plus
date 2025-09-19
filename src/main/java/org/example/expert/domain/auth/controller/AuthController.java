@@ -9,6 +9,7 @@ import org.example.expert.domain.auth.dto.response.SignupResponse;
 import org.example.expert.domain.auth.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,8 +18,20 @@ public class AuthController {
 
     private final AuthService authService;
 
+//    @PostMapping("/auth/signup")
+//    public SignupResponse signup(@Valid @RequestBody SignupRequest signupRequest) {
+//        return authService.signup(signupRequest);
+//
+//    }
+
     @PostMapping("/auth/signup")
-    public SignupResponse signup(@Valid @RequestBody SignupRequest signupRequest) {
+    public SignupResponse signup(
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String nickname,
+            @RequestParam String userRole
+    ) {
+        SignupRequest signupRequest = new SignupRequest(email, password, nickname, userRole);
         return authService.signup(signupRequest);
     }
 
