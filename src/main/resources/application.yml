@@ -18,7 +18,9 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 jwt:
   secret:
-    key: ${JWT_SECRET_KEY}
+    key: your_secret_key_here
+    #key: ${JWT_SECRET_KEY}
+
 
 
 
