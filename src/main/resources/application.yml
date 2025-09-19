@@ -3,7 +3,8 @@ spring:
     #url: jdbc:mysql://localhost:${PORT}/${DB}
     #username: ${USERNAME}
     #password: ${PASSWORD}
-    url: jdbc:mysql://mydb-instance.czsag8i8o5ll.ap-northeast-2.rds.amazonaws.com:3306/mydatabase?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://mydb-instance.czsag8i8o5ll.ap-northeast-2.rds.amazonaws.com:3306/mydb-instance?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+
     username: admin
     password: qwer1234!A
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -18,4 +19,6 @@ spring:
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
+
+
 
