@@ -12,28 +12,39 @@
 
 Level 1.
  - saveTodo 부분에 @transactional 추가
+   
 Level 2.
  - user엔티티에 nickname 추가
  - 추가된 nickname을 필요로 하는 부분에 모두 추가
+   
 Level 3.
  - TodoRepository에 JPQL 쿼리문 추가 및 서비스,컨트롤러 단 수정
+   
 Level 4.
  - nickname 추가로 인한 수정 및 예상응답 수정
+   
 Level 5.
  - @after -> @before 변경
+
 Level 6.
  - Todo 엔티티에 cascade 구문 추가
+
 Level 7.
  - FETCH JOIN 을 사용한 쿼리문
+
 Level 8.
  - 기존 JPQL 쿼리문을 삭제하고 QueryDSL로 변경
+
 Level 9.
  - FilterConfig, WebConfig 삭제 및 SecurityConfig 생성
  - Auth 관련 어노테이션 삭제
+
 Level 10.
  - QueryDSL을 활용한 검색 API 추가
+
 Level 11.
  - log 테이블 생성 및 manager와 log 의 서비스 부분 수정
+
 Level 12.
  - AWS EC2를 활용한 어플리케이션 구현
  - helpth check를 위한 API 생성
