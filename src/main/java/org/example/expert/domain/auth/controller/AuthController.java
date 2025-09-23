@@ -18,21 +18,10 @@ public class AuthController {
 
     private final AuthService authService;
 
-//    @PostMapping("/auth/signup")
-//    public SignupResponse signup(@Valid @RequestBody SignupRequest signupRequest) {
-//        return authService.signup(signupRequest);
-//
-//    }
-
     @PostMapping("/auth/signup")
-    public SignupResponse signup(
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String nickname,
-            @RequestParam String userRole
-    ) {
-        SignupRequest signupRequest = new SignupRequest(email, password, nickname, userRole);
+    public SignupResponse signup(@Valid @RequestBody SignupRequest signupRequest) {
         return authService.signup(signupRequest);
+
     }
 
     @PostMapping("/auth/signin")
