@@ -43,7 +43,6 @@ jobs:
           username: ec2-user
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          script_stop: true
           script: |
             sudo yum update -y && sudo yum install -y java-17-amazon-corretto
             for pid in $(pgrep java); do
